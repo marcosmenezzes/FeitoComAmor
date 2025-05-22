@@ -1,128 +1,450 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seu Presente</title>
-    <link rel="stylesheet" href="style.css"> 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slider com 12 Imagens</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap');
+
+  * {
+      box-sizing: border-box;
+  }
+
+  body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background-color: #010101;
+      color: #eee;
+  }
+
+  svg {
+      width: 25px;
+  }
+
+  header {
+      width: 1200px;
+      max-width: 90%;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 50px 1fr 50px;
+      grid-template-rows: 50px;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 100;
+  }
+
+  header .logo {
+      font-weight: bold;
+  }
+
+  header .menu {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-weight: 500;
+      cursor: pointer;
+  }
+
+  .slider {
+      height: 100vh;
+      margin-top: -50px;
+      position: relative;
+      overflow: hidden;
+  }
+
+  .slider .list .item {
+      position: absolute;
+      inset: 0 0 0 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: 0.5s;
+  }
+
+  .slider .list .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  .slider .list .item::after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background-image: linear-gradient(to top, #000 40%, transparent);
+  }
+
+  .slider .list .item .content {
+      position: absolute;
+      left: 10%;
+      top: 20%;
+      width: 500px;
+      max-width: 80%;
+      z-index: 1;
+  }
+
+  .slider .list .item .content p:nth-child(1) {
+      text-transform: uppercase;
+      letter-spacing: 10px;
+  }
+
+  .slider .list .item .content h2 {
+      font-size: 100px;
+      margin: 0;
+  }
+
+  .slider .list .item.active {
+      opacity: 1;
+      z-index: 10;
+  }
+
+  @keyframes showContent {
+      to {
+          transform: translateY(0);
+          filter: blur(0);
+          opacity: 1;
+      }
+  }
+
+  .slider .list .item.active p:nth-child(1),
+  .slider .list .item.active h2,
+  .slider .list .item.active p:nth-child(3) {
+      transform: translateY(30px);
+      filter: blur(20px);
+      opacity: 0;
+      animation: showContent 0.5s 0.7s ease-in-out 1 forwards;
+  }
+
+  .slider .list .item.active h2 {
+      animation-delay: 1s;
+  }
+
+  .slider .list .item.active p:nth-child(3) {
+      animation-delay: 1.3s;
+  }
+
+  .arrows {
+      position: absolute;
+      top: 30%;
+      right: 50px;
+      z-index: 100;
+  }
+
+  .arrows button {
+      background-color: #eee5;
+      border: none;
+      font-family: monospace;
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      font-size: x-large;
+      color: #eee;
+      transition: 0.5s;
+      cursor: pointer;
+  }
+
+  .arrows button:hover {
+      background-color: #eee;
+      color: #010101;
+  }
+
+  .thumbnail {
+      position: absolute;
+      bottom: 50px;
+      z-index: 11;
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      height: 250px;
+      padding: 0 50px;
+      justify-content: center;
+      overflow-x: auto;
+  }
+
+  .thumbnail .item {
+      width: 150px;
+      height: 220px;
+      filter: brightness(0.5);
+      transition: 0.5s;
+      flex-shrink: 0;
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+  }
+
+  .thumbnail .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+  }
+
+  .thumbnail .item.active {
+      filter: brightness(1);
+      box-shadow: 0 0 10px #eee;
+  }
+
+  @media screen and (max-width: 678px) {
+      .thumbnail {
+          justify-content: start;
+      }
+
+      .slider .list .item .content h2 {
+          font-size: 60px;
+      }
+
+      .arrows {
+          top: 10%;
+      }
+  }
+</style>
 </head>
 <body>
-    <!--Header-->
-    <header>
-        <div class="logo">Nós</div>
-        <ul class="menu">
-            <li>Home</li>
-            <li>Blog</li>
-            <li>Info</li>
-        </ul>
-        <div class="search">
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+
+<header>
+    <div class="logo">Nós</div>
+    <ul class="menu">
+        <li>Home</li>
+        <li>Blog</li>
+        <li>Info</li>
+    </ul>
+    <div class="search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
         </svg>
-        </div>
-    </header>
-
-                                                             <!--Slider-->
-    <div class="slider">
-        <!--Lista de imagens do slide-->
-        <div class="list">
-            <!--Item 1-->
-            <div class="item active">
-                 <img src="https://encurtador.com.br/i23vr">
-            <div class="content">
-                <p>design</p>
-                <h2>Slider 01</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Quisquam, voluptatibus.</p>
-            </div>
-            </div>
-           <!--Fim item 1-->           
-           <!--Item 2-->
-           <div class="item">
-                 <img src="https://encurtador.com.br/ngwkz" alt="Imagem 2">>
-            <div class="content">
-                <p>design</p>
-                <h2>Slider 02</h2>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquam, non.</p>
-            </div>
-            </div>
-            <!--Fim item 2-->
-            <!--Item 3-->
-            <div class="item">
-                 <img src="https://encurtador.com.br/8Esux">>
-            <div class="content">
-                <p>design</p>
-                <h2>Slider 03</h2>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi, animi. ipsum dolor sit amet consectetur adipisicing elit. 
-                    Quisquam, voluptatibus.</p>
-            </div>
-            </div>
-            <!--Fim item 3-->
-            <!--Item 4-->
-            <div class="item">
-                 <img src="https://encurtador.com.br/cMD7B" alt="Imagem 4">>
-            <div class="content">
-                <p>design</p>
-                <h2>Slider 04</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Quisquam, voluptatibus.</p>
-            </div>
-            </div>
-            <!--Fim item 4-->
-            <!--Item 5-->
-            <div class="item">
-                 <img src="https://encurtador.com.br/pulAG">>
-            <div class="content">
-                <p>design</p>
-                <h2>Slider 05</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Quisquam, voluptatibus.</p>
-            </div>
-            </div>
-            <!--Fim item 5-->
-        </div>
     </div>
-                                                                <!--Fim slider-->
+</header>
 
-                                                                <!--Setinhas pra passar -->
+<div class="slider">
+    <div class="list">
+
+      <!-- 12 slides -->
+      <!-- Você pode editar o texto e imagens -->
+      <div class="item active">
+          <img src="img/img1.jpg" alt="Slider 01" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 01</h2>
+              <p>Descrição da imagem 01.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img2.jpg" alt="Slider 02" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 02</h2>
+              <p>Descrição da imagem 02.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img3.jpg" alt="Slider 03" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 03</h2>
+              <p>Descrição da imagem 03.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img4.jpg" alt="Slider 04" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 04</h2>
+              <p>Descrição da imagem 04.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img5.jpg" alt="Slider 05" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 05</h2>
+              <p>Descrição da imagem 05.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img6.jpg" alt="Slider 06" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 06</h2>
+              <p>Descrição da imagem 06.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img7.jpg" alt="Slider 07" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 07</h2>
+              <p>Descrição da imagem 07.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img8.jpg" alt="Slider 08" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 08</h2>
+              <p>Descrição da imagem 08.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img9.jpg" alt="Slider 09" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 09</h2>
+              <p>Descrição da imagem 09.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img10.jpg" alt="Slider 10" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 10</h2>
+              <p>Descrição da imagem 10.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img11.jpg" alt="Slider 11" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 11</h2>
+              <p>Descrição da imagem 11.</p>
+          </div>
+      </div>
+
+      <div class="item">
+          <img src="img/img12.jpg" alt="Slider 12" />
+          <div class="content">
+              <p>Design</p>
+              <h2>Slider 12</h2>
+              <p>Descrição da imagem 12.</p>
+          </div>
+      </div>
+
+    </div>
 
     <div class="arrows">
-        <button id="prev"><</button>
-         <button id="next">></button>
-    </div>
-                                                                <!--Fim setinhas-->
-
-
-
-
-                                                                <!--Local das Imagens-->
-
-
-    <div class="thumbnail">
-    <div class="item active">
-        <img src="https://encurtador.com.br/i23vr" alt="Imagem 1">
-        <div class="content">Nome do Slider</div>
-    </div>
-    <div class="item">
-        <img src="https://encurtador.com.br/ngwkz" alt="Imagem 2">
-        <div class="content">Nome do Slider</div>
-    </div>
-    <div class="item">
-        <img src="https://encurtador.com.br/8Esux" alt="Imagem 3">
-        <div class="content">Nome do Slider</div>
-    </div>
-    <div class="item">
-        <img src="https://encurtador.com.br/cMD7B" alt="Imagem 4">
-        <div class="content">Nome do Slider</div>
-    </div>
-    <div class="item">
-        <img src="https://encurtador.com.br/pulAG" alt="Imagem 5">
-        <div class="content">Nome do Slider</div>
+        <button id="prev" aria-label="Anterior">&lt;</button>
+        <button id="next" aria-label="Próximo">&gt;</button>
     </div>
 </div>
 
+<div class="thumbnail">
 
+  <!-- 12 thumbnails -->
+  <div class="item active" data-index="0">
+      <img src="img/img1.jpg" alt="Thumbnail Slider 01" />
+      <div class="content">Slider 01</div>
+  </div>
 
-    <script src="app.js"></script>
+  <div class="item" data-index="1">
+      <img src="img/img2.jpg" alt="Thumbnail Slider 02" />
+      <div class="content">Slider 02</div>
+  </div>
+
+  <div class="item" data-index="2">
+      <img src="img/img3.jpg" alt="Thumbnail Slider 03" />
+      <div class="content">Slider 03</div>
+  </div>
+
+  <div class="item" data-index="3">
+      <img src="img/img4.jpg" alt="Thumbnail Slider 04" />
+      <div class="content">Slider 04</div>
+  </div>
+
+  <div class="item" data-index="4">
+      <img src="img/img5.jpg" alt="Thumbnail Slider 05" />
+      <div class="content">Slider 05</div>
+  </div>
+
+  <div class="item" data-index="5">
+      <img src="img/img6.jpg" alt="Thumbnail Slider 06" />
+      <div class="content">Slider 06</div>
+  </div>
+
+  <div class="item" data-index="6">
+      <img src="img/img7.jpg" alt="Thumbnail Slider 07" />
+      <div class="content">Slider 07</div>
+  </div>
+
+  <div class="item" data-index="7">
+      <img src="img/img8.jpg" alt="Thumbnail Slider 08" />
+      <div class="content">Slider 08</div>
+  </div>
+
+  <div class="item" data-index="8">
+      <img src="img/img9.jpg" alt="Thumbnail Slider 09" />
+      <div class="content">Slider 09</div>
+  </div>
+
+  <div class="item" data-index="9">
+      <img src="img/img10.jpg" alt="Thumbnail Slider 10" />
+      <div class="content">Slider 10</div>
+  </div>
+
+  <div class="item" data-index="10">
+      <img src="img/img11.jpg" alt="Thumbnail Slider 11" />
+      <div class="content">Slider 11</div>
+  </div>
+
+  <div class="item" data-index="11">
+      <img src="img/img12.jpg" alt="Thumbnail Slider 12" />
+      <div class="content">Slider 12</div>
+  </div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slider .list .item');
+  const thumbs = document.querySelectorAll('.thumbnail .item');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+
+  let currentIndex = 0;
+
+  function updateSlider(index) {
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      thumbs.forEach((thumb, i) => thumb.classList.toggle('active', i === index));
+      currentIndex = index;
+  }
+
+  function nextSlide() {
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= slides.length) nextIndex = 0;
+      updateSlider(nextIndex);
+  }
+
+  function prevSlide() {
+      let prevIndex = currentIndex - 1;
+      if (prevIndex < 0) prevIndex = slides.length - 1;
+      updateSlider(prevIndex);
+  }
+
+  nextBtn.addEventListener('click', nextSlide);
+  prevBtn.addEventListener('click', prevSlide);
+
+  thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+          const index = parseInt(thumb.getAttribute('data-index'));
+          updateSlider(index);
+      });
+  });
+</script>
+
 </body>
 </html>

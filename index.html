@@ -227,6 +227,20 @@
             display: none;
         }
 
+        .thumbnail-list .item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .slider .list .item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
         @media screen and (max-width: 678px) {
             .thumbnail-list {
                 justify-content: flex-start;
@@ -401,6 +415,17 @@
             </div>
         </div>
 
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo</p>
+                <h2>Título do Vídeo</h2>
+                <p>Descrição do seu vídeo especial aqui.</p>
+            </div>
+        </div>
     </div>
 
     <div class="arrows">
@@ -459,6 +484,11 @@
             <img src="img/img12.jpg" alt="Thumbnail Slider 12" />
         </div>
 
+        <div class="item" data-index="12">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo.mp4" type="video/mp4">
+            </video>
+        </div>
     </div>
     <div class="roleta-arrows"></div>
 </div>

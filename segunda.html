@@ -316,7 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
     cards.forEach(card => {
         // Adicionar evento de toque inicial
         card.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevenir comportamento padrão
             touchTimer = setTimeout(() => {
                 this.classList.toggle('flipped');
             }, 500); // 500ms = 0.5 segundos

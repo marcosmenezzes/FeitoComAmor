@@ -311,12 +311,20 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.card-inner');
+    let touchTimer;
     
     cards.forEach(card => {
-        // Adicionar evento de toque
+        // Adicionar evento de toque inicial
         card.addEventListener('touchstart', function(e) {
             e.preventDefault(); // Prevenir comportamento padrão
-            this.classList.toggle('flipped');
+            touchTimer = setTimeout(() => {
+                this.classList.toggle('flipped');
+            }, 500); // 500ms = 0.5 segundos
+        });
+        
+        // Cancelar o timer se o usuário soltar antes de 0.5s
+        card.addEventListener('touchend', function() {
+            clearTimeout(touchTimer);
         });
         
         // Manter o hover para desktop

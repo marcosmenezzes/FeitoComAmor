@@ -79,18 +79,20 @@
             padding: 20px;
         }
 
-        /* Container do card com perspectiva */
+        /* Desabilitar o comportamento padrão de toque para evitar problemas */
         .card {
             perspective: 1000px;
             border-radius: 15px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
-        /* A "carta" interna que será girada */
+        /* Modificar a transição para funcionar com toque */
         .card-inner {
             position: relative;
             width: 100%;
             padding: 15px;
-            height: 150px; /* Reduced height */
+            height: 150px;
             border-radius: 12px;
             box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
             border: 1px solid #222;
@@ -100,8 +102,8 @@
             cursor: pointer;
         }
 
-        /* Efeito hover para girar o card */
-        .card:hover .card-inner {
+        /* Remover o hover e adicionar classe para girar */
+        .card-inner.flipped {
             transform: rotateY(180deg);
             box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
         }
@@ -260,3 +262,26 @@
 
 </body>
 </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.card-inner');
+    
+    cards.forEach(card => {
+        // Adicionar evento de toque
+        card.addEventListener('touchstart', function(e) {
+            e.preventDefault(); // Prevenir comportamento padrão
+            this.classList.toggle('flipped');
+        });
+        
+        // Manter o hover para desktop
+        card.addEventListener('mouseenter', function() {
+            this.classList.add('flipped');
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.classList.remove('flipped');
+        });
+    });
+});
+</script>

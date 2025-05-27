@@ -227,20 +227,6 @@
             display: none;
         }
 
-        .thumbnail-list .item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-
-        .slider .list .item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
         @media screen and (max-width: 678px) {
             .thumbnail-list {
                 justify-content: flex-start;
@@ -426,6 +412,66 @@
                 <p>Descrição do seu vídeo especial aqui.</p>
             </div>
         </div>
+
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo 2</p>
+                <h2>Título do Vídeo 2</h2>
+                <p>Descrição do seu segundo vídeo especial aqui.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo 3</p>
+                <h2>Título do Vídeo 3</h2>
+                <p>Descrição do seu terceiro vídeo especial aqui.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo4.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo 4</p>
+                <h2>Título do Vídeo 4</h2>
+                <p>Descrição do seu quarto vídeo especial aqui.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo5.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo 5</p>
+                <h2>Título do Vídeo 5</h2>
+                <p>Descrição do seu quarto vídeo especial aqui.</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo6.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="content">
+                <p>Data do Vídeo 6</p>
+                <h2>Título do Vídeo 6</h2>
+                <p>Descrição do seu quarto vídeo especial aqui.</p>
+            </div>
+        </div>
     </div>
 
     <div class="arrows">
@@ -489,6 +535,37 @@
                 <source src="video/seuvideo.mp4" type="video/mp4">
             </video>
         </div>
+
+        <div class="item" data-index="13">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo2.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="item" data-index="14">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo3.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="item" data-index="15">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo4.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="item" data-index="16">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo5.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="item" data-index="17">
+            <video width="100%" height="100%" autoplay muted loop playsinline>
+                <source src="video/seuvideo6.mp4" type="video/mp4">
+            </video>
+        </div>
+
     </div>
     <div class="roleta-arrows"></div>
 </div>
@@ -506,7 +583,15 @@
     const numVisibleThumbnails = 5;
 
     function updateMainSlider(index) {
-        slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+            
+            const video = slide.querySelector('video');
+            if (video) {
+                video.currentTime = 0;
+                video.play();
+            }
+        });
         currentSlideIndex = index;
         updateThumbnails();
     }
@@ -567,8 +652,20 @@
     updateMainSlider(0);
     window.addEventListener('resize', updateThumbnails);
 
-    setInterval(nextMainSlide, 10000); // Change slide every 10 seconds
+    setInterval(nextMainSlide, 30000); // Change slide every 30 seconds
     updateThumbnails();
+
+    function handleVideos() {
+        const videos = document.querySelectorAll('.item video');
+        videos.forEach(video => {
+            video.addEventListener('ended', function() {
+                // Instead of moving to next slide, restart the video
+                video.play();
+            });
+        });
+    }
+
+    handleVideos();
 </script>
 
 </body>

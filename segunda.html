@@ -28,11 +28,14 @@
             max-width: 90%;
             margin: 20px auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .logo {
+            position: absolute;
+            left: 0;
             font-weight: bold;
             font-size: 1.5rem;
         }
@@ -48,10 +51,41 @@
             text-decoration: none;
             font-weight: 600;
             transition: 0.3s;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 1rem;
+            text-transform: capitalize;
         }
 
         .menu li a:hover {
-            color: #ccc;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .menu li a {
+                padding: 6px 16px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                margin: 15px auto;
+            }
+
+            .logo {
+                display: none;
+            }
+
+            .menu li a {
+                padding: 6px 16px;
+                font-size: 0.9rem;
+            }
         }
 
         .container {
@@ -77,6 +111,28 @@
             gap: 20px;
             width: 100%;
             padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .card-inner {
+                height: 120px;
+                padding: 10px;
+            }
+
+            .card-front h2 {
+                font-size: 0.9rem;
+            }
+
+            .card-back p {
+                font-size: 0.8rem;
+                padding: 5px;
+            }
         }
 
         /* Desabilitar o comportamento padrão de toque para evitar problemas */
@@ -222,7 +278,7 @@
 <body>
 
 <header>
-    <div class="logo">🖤</div>
+    <div class="logo"></div>
     <ul class="menu">
         <li><a href="index.html">Voltar</a></li>
     </ul>
@@ -276,7 +332,7 @@
                     <h2>Uma cantada</h2>
                 </div>
                 <div class="card-back">
-                    <p>Não faça especialização na área de anestesia. Você seria uma péssima anestesista, pq é impossível não sentir nada perto de você</p>
+                    <p>Não faça especialização na área de anestesia. Você seria uma péssima anestesista, pq é impossível não sentir nada perto de você></p>
                 </div>
             </div>
         </div>
@@ -298,10 +354,44 @@
                     <h2>Um medo</h2>
                 </div>
                 <div class="card-back">
-                    <p>De não saber cuidar direito dos nossos bebes, tenho medo de ser uma pai despreparado, meu sonho é ter a nossa família crescendo</p>
+                    <p>De não saber cuidar direito dos nossos bebes, tenho medo de ser uma pai despreparado, um pai banana, um pai que não pareça um pai.</p>
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Um sonho</h2>
+                </div>
+                <div class="card-back">
+                    <p>Cuidar de você em todas as etapas do nosso futuro, quero ser um bom pai para nossos filhos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Ciúmes</h2>
+                </div>
+                <div class="card-back">
+                    <p>Você não me da motivos pra ter ciúmes, pode parecer que eu não me importo, mas tem certas coisas que me deixariam pá.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-inner">
+                <div class="card-front">
+                    <h2>Dia 1</h2>
+                </div>
+                <div class="card-back">
+                    <p>Lembro de quando fui pedir sua mão para seu pai, nunca falei muito da nossa conversa, mas eu disse
+                        que sabia que você era uma princesa e uma joia que tinha que ser protegida.
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
